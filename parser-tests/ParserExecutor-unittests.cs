@@ -4,7 +4,7 @@ using query_parser;
 namespace query_tests
 {
     [TestClass]
-    public class QueryTests
+    public class ParserExecutorTests
     {
         private ParserExecutor parserExecutor = new ParserExecutor();
 

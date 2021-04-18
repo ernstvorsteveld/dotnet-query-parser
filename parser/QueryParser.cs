@@ -13,10 +13,10 @@ namespace query_parser
         public static Parser<string> Operation = Parse.CharExcept(" ").Many().Text().Token();
 
         public static Parser<string> AndToken = Parse.Chars("AND").Many().Text().Token();
-        public static Parser<FieldExpression> Expression = from name in Identifier
+        public static Parser<SimpleExpression> Expression = from name in Identifier
                                                            from operation in Operation
                                                            from value in Value
-                                                           select new FieldExpression(name, Enum.Parse<Operation>(operation), value);
+                                                           select new SimpleExpression(name, Enum.Parse<Operation>(operation), value);
 
         public static Parser<AndExpression> AndExpression = from left in Expression
                                                             from andToken in AndToken

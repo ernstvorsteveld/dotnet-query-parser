@@ -13,7 +13,7 @@ namespace query_parser_tests
             string attributeName = "partner_id";
             Operation operation = Operation.EQ;
             string value = "10";
-            FieldExpression fieldExpression = new FieldExpression(attributeName, operation, value);
+            SimpleExpression fieldExpression = new SimpleExpression(attributeName, operation, value);
             Assert.AreEqual(attributeName, fieldExpression.Name);
             Assert.AreEqual(operation, fieldExpression.Operation);
             Assert.AreEqual(value, fieldExpression.Value);

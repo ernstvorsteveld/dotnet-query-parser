@@ -10,15 +10,14 @@ namespace query_parser {
 
     public class Query {
 
-        public FieldExpression FieldExpression { get; set; }
+        public SimpleExpression SimpleExpression { get; set; }
         public AndExpression AndExpression { get; set; }
 
         public Query(AndExpression andExpression) {
             this.AndExpression = andExpression;
         }
-        public Query(FieldExpression fieldExpression) {
-            this.FieldExpression  = fieldExpression;
+        public Query(SimpleExpression simpleExpression) {
+            this.SimpleExpression  = simpleExpression;
         }
-
     }
 }

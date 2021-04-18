@@ -15,13 +15,13 @@ namespace query_parser
         NE,
         CO
     }
-    public class FieldExpression
+    public class SimpleExpression
     {
         public String Name { get; set; }
         public Operation Operation { get; set; }
         public String Value { get; set; }
 
-        public FieldExpression(String name, Operation operation, String value)
+        public SimpleExpression(String name, Operation operation, String value)
         {
             Name = name;
             Operation = operation;
@@ -54,10 +54,10 @@ namespace query_parser
 
     public class AndExpression
     {
-        public FieldExpression Left { get; set; }
-        public FieldExpression Right { get; set; }
+        public SimpleExpression Left { get; set; }
+        public SimpleExpression Right { get; set; }
 
-        public AndExpression(FieldExpression left, FieldExpression right)
+        public AndExpression(SimpleExpression left, SimpleExpression right)
         {
             Left = left;
             Right = right;

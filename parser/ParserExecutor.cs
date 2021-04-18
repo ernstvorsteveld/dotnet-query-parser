@@ -4,7 +4,7 @@ namespace query_parser
 {
     public class ParserExecutor
     {
-        public FieldExpression getByFieldExpression(string queryString){
+        public SimpleExpression getBySimpleExpression(string queryString){
             return QueryParser.Expression.Parse(queryString);
         }
 

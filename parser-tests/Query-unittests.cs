@@ -14,12 +14,12 @@ namespace query_tests
         [TestMethod]
         public void should_parse_field_expression()
         {
-            FieldExpression fieldExpression = new ParserExecutor().getByFieldExpression("partner_id EQ 10");
+            SimpleExpression fieldExpression = new ParserExecutor().getBySimpleExpression("partner_id EQ 10");
             Assert.AreEqual("partner_id", fieldExpression.Name);
             Assert.AreEqual(Operation.EQ, fieldExpression.Operation);
             Assert.AreEqual("10", fieldExpression.Value);
 
-            fieldExpression = new ParserExecutor().getByFieldExpression("supplier_id EQ bok");
+            fieldExpression = new ParserExecutor().getBySimpleExpression("supplier_id EQ bok");
             Assert.AreEqual("supplier_id", fieldExpression.Name);
             Assert.AreEqual(Operation.EQ, fieldExpression.Operation);
             Assert.AreEqual("bok", fieldExpression.Value);

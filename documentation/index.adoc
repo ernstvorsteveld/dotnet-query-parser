@@ -1,0 +1,42 @@
+= MongoDB parser
+:toc:
+:toclevels: 4
+:sectnums:
+:author: Ernst Vorsteveld
+:title: {doctitle}
+:title-page:
+:revnumber: 0.1
+:revdate: 22-12-2021
+
+== Setup
+
+=== Project structure
+
+[source,bash]
+----
+dotnet new sln -n mongodb-query-parser
+dotnet new console -o parser
+dotnet sln mongodb-query-parser.sln add parser/parser.csproj
+
+dotnet new mstest -o parser-tests
+cd parser-tests
+dotnet add reference ../parser/parser.csproj
+cd ..
+dotnet sln add parser-tests/parser-tests.csproj
+----
+
+=== Dependencies
+
+[source,bash]
+----
+dotnet add package Sprache
+dotnet add package MongoDB.Driver
+----
+
+== Grammar
+
+[source,bash]
+----
+query="supplier_id EQ 10 AND start_date BETWEEN(01012021, 010402021)"
+
+----

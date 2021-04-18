@@ -4,6 +4,11 @@ using MongoDB.Bson;
 
 namespace query_parser
 {
+    public interface Expression
+    { 
+        public string getName();
+    }
+
 
     public enum Operation
     {
@@ -15,7 +20,7 @@ namespace query_parser
         NE,
         CO
     }
-    public class SimpleExpression
+    public class SimpleExpression : Expression
     {
         public String Name { get; set; }
         public Operation Operation { get; set; }
@@ -35,10 +40,13 @@ namespace query_parser
         {
             return Builders<BsonDocument>.Filter.Eq(Name, Value);
         }
-
+        public string getName()
+        {
+            return "SimpleExpression";
+        }
     }
 
-    public class BetweenExpression
+    public class BetweenExpression : Expression
     {
         public String Name;
         public String From;
@@ -50,14 +58,18 @@ namespace query_parser
             From = from;
             To = to;
         }
+        public string getName()
+        {
+            return "BetweenExpression";
+        }
     }
 
     public class AndExpression
     {
-        public SimpleExpression Left { get; set; }
-        public SimpleExpression Right { get; set; }
+        public Expression Left { get; set; }
+        public Expression Right { get; set; }
 
-        public AndExpression(SimpleExpression left, SimpleExpression right)
+        public AndExpression(Expression left, Expression right)
         {
             Left = left;
             Right = right;

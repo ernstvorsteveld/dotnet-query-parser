@@ -10,21 +10,15 @@ namespace query_parser {
 
     public class Query {
 
-        public FieldExpression field { get; set; }
+        public FieldExpression FieldExpression { get; set; }
         public AndExpression AndExpression { get; set; }
 
-        private string QueryString;
-
-        public Query(string query) {
-            this.QueryString = query;
+        public Query(AndExpression andExpression) {
+            this.AndExpression = andExpression;
+        }
+        public Query(FieldExpression fieldExpression) {
+            this.FieldExpression  = fieldExpression;
         }
 
-        public FieldExpression getByFieldExpression(){
-            return QueryParser.Expression.Parse(QueryString);
-        }
-
-        public AndExpression getByAndExpression() {
-            return QueryParser.AndExpression.Parse(QueryString);
-        }
     }
 }

@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sprache;
 
 namespace query_parser
@@ -25,5 +22,11 @@ namespace query_parser
                                                             from andToken in AndToken
                                                             from right in Expression
                                                             select new AndExpression(left, right);
+
+        public static Parser<Query> Query =
+            (from andExpression in AndExpression
+             select new Query(andExpression))
+            .Or(from expression in Expression
+                select new Query(expression));
     }
 }

@@ -14,14 +14,12 @@ namespace query_tests
         [TestMethod]
         public void should_parse_field_expression()
         {
-            Query query = new Query("partner_id EQ 10");
-            FieldExpression fieldExpression = query.getByFieldExpression();
+            FieldExpression fieldExpression = new ParserExecutor().getByFieldExpression("partner_id EQ 10");
             Assert.AreEqual("partner_id", fieldExpression.Name);
             Assert.AreEqual(Operation.EQ, fieldExpression.Operation);
             Assert.AreEqual("10", fieldExpression.Value);
 
-            query = new Query("supplier_id EQ bok");
-            fieldExpression = query.getByFieldExpression();
+            fieldExpression = new ParserExecutor().getByFieldExpression("supplier_id EQ bok");
             Assert.AreEqual("supplier_id", fieldExpression.Name);
             Assert.AreEqual(Operation.EQ, fieldExpression.Operation);
             Assert.AreEqual("bok", fieldExpression.Value);
@@ -30,8 +28,7 @@ namespace query_tests
         [TestMethod]
         public void should_parse_and_expression()
         {
-            Query query = new Query("partner_id EQ 10 AND supplier_id EQ 20");
-            AndExpression andExpression = query.getByAndExpression();
+            AndExpression andExpression = new ParserExecutor().getByAndExpression("partner_id EQ 10 AND supplier_id EQ 20");
             Assert.AreEqual("partner_id", andExpression.Left.Name);
             Assert.AreEqual(Operation.EQ, andExpression.Left.Operation);
             Assert.AreEqual("10", andExpression.Left.Value);
@@ -39,6 +36,19 @@ namespace query_tests
             Assert.AreEqual("supplier_id", andExpression.Right.Name);
             Assert.AreEqual(Operation.EQ, andExpression.Right.Operation);
             Assert.AreEqual("20", andExpression.Right.Value);
+        }
+
+        [TestMethod]
+        public void should_parse_query()
+        {
+            Query query = new ParserExecutor().getByQuery("partner_id EQ 10 AND supplier_id EQ 20");
+            Assert.AreEqual("partner_id", query.AndExpression.Left.Name);
+            Assert.AreEqual(Operation.EQ, query.AndExpression.Left.Operation);
+            Assert.AreEqual("10", query.AndExpression.Left.Value);
+
+            Assert.AreEqual("supplier_id", query.AndExpression.Right.Name);
+            Assert.AreEqual(Operation.EQ, query.AndExpression.Right.Operation);
+            Assert.AreEqual("20", query.AndExpression.Right.Value);
         }
     }
 }

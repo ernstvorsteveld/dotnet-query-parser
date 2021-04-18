@@ -9,6 +9,11 @@ namespace query_parser
         public string getName();
     }
 
+    public enum BooleanOperator
+    {
+        AND,
+        OR
+    }
 
     public enum Operation
     {
@@ -45,7 +50,6 @@ namespace query_parser
             return "SimpleExpression";
         }
     }
-
     public class BetweenExpression : Expression
     {
         public String Name;
@@ -64,15 +68,21 @@ namespace query_parser
         }
     }
 
-    public class AndExpression
+    public class BooleanExpression : Expression
     {
         public Expression Left { get; set; }
         public Expression Right { get; set; }
+        public BooleanOperator BooleanOperator { get; set; }
 
-        public AndExpression(Expression left, Expression right)
+        public BooleanExpression(BooleanOperator booleanOperator, Expression left, Expression right)
         {
             Left = left;
             Right = right;
+            BooleanOperator = booleanOperator;
+        }
+        public string getName()
+        {
+            return "BooleanExpression";
         }
 
     }

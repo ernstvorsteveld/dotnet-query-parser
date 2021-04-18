@@ -1,10 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using query_parser;
-using System.IO;
-using System;
-using Sprache;
-using MongoDB.Driver;
-using MongoDB.Bson;
 
 namespace query_tests
 {

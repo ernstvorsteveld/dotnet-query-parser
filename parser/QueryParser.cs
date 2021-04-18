@@ -21,7 +21,7 @@ namespace query_parser
             .Or(Parse.String("OR").Once().Return(BooleanOperator.OR));
         public static Parser<string> CommaToken = Parse.Char(',').Once().Text().Token();
         public static Parser<string> BetweenToken = Parse.String("BETWEEN").Once().Return("BETWEEN");
-        public static Parser<Expression> Expression =
+        public static Parser<Expression> SimpleExpression =
             (from name in Identifier
              from between in BetweenToken
              from startBracket in StartBracket
@@ -36,10 +36,10 @@ namespace query_parser
              from value in Value
              select new SimpleExpression(name, operation, value));
 
-        public static Parser<BooleanExpression> BooleanExpression = 
-            (from left in Expression
+        public static Parser<Expression> BooleanExpression = 
+            (from left in SimpleExpression
              from booleanOperatorToken in BooleanOperatorToken
-             from right in Expression
+             from right in SimpleExpression
              select new BooleanExpression(booleanOperatorToken, left, right));
 
         public static Parser<Query> Query =
@@ -47,7 +47,7 @@ namespace query_parser
              select new Query(booleanExpression)
             )
             .Or
-            (from expression in Expression
+            (from expression in SimpleExpression
              select new Query(expression)
             );
     }

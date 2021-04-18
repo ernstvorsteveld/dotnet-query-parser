@@ -10,8 +10,15 @@ namespace query_parser
         public static Parser<string> EndBracket = Parse.Char(')').Once().Text().Token();
         public static Parser<string> Value = Parse.CharExcept(" ,())").Many().Text().Token();
         public static Parser<string> Identifier = Parse.CharExcept(" ,())").Many().Text().Token();
-        public static Parser<Operation> OperationToken = Parse.String("EQ").Once().Return(Operation.EQ);
-        public static Parser<BooleanOperator> BooleanOperatorToken = Parse.String("AND").Once().Return(BooleanOperator.AND).Or(Parse.String("OR").Once().Return(BooleanOperator.OR));
+        public static Parser<Operation> OperationToken = 
+            Parse.String("EQ").Once().Return(Operation.EQ)
+            .Or(Parse.String("GT").Once().Return(Operation.GT))
+            .Or(Parse.String("GTE").Once().Return(Operation.GTE))
+            .Or(Parse.String("LT").Once().Return(Operation.LT))
+            .Or(Parse.String("LTE").Once().Return(Operation.LTE));
+        public static Parser<BooleanOperator> BooleanOperatorToken = 
+            Parse.String("AND").Once().Return(BooleanOperator.AND)
+            .Or(Parse.String("OR").Once().Return(BooleanOperator.OR));
         public static Parser<string> CommaToken = Parse.Char(',').Once().Text().Token();
         public static Parser<string> BetweenToken = Parse.String("BETWEEN").Once().Return("BETWEEN");
         public static Parser<Expression> Expression =

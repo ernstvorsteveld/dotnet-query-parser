@@ -57,5 +57,12 @@ namespace query_tests
             Assert.AreEqual(Operation.EQ, right.Operation);
             Assert.AreEqual("20", right.Value);
         }
+        [TestMethod]
+        public void should_parse_between_expression() {
+            Query query = parserExecutor.Parse("sign_date BETWEEN(01012021,01032021)");
+            BetweenExpression between = (BetweenExpression) query.Expression;
+            Assert.AreEqual("01012021", between.From);
+            Assert.AreEqual("01032021", between.To);
+        }
     }
 }

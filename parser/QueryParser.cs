@@ -8,8 +8,8 @@ namespace query_parser
     {
         public static Parser<string> StartBracket = Parse.Char('(').Once().Text().Token();
         public static Parser<string> EndBracket = Parse.Char(')').Once().Text().Token();
-        public static Parser<string> Value = Parse.CharExcept(" ,())").Many().Text().Token();
-        public static Parser<string> Identifier = Parse.CharExcept(" ,())").Many().Text().Token();
+        public static Parser<string> Value = Parse.CharExcept(" ,()").Many().Text().Token();
+        public static Parser<string> Identifier = Parse.CharExcept(" ,()").Many().Text().Token();
         public static Parser<Operation> OperationToken = 
             Parse.String("EQ").Once().Return(Operation.EQ)
             .Or(Parse.String("GT").Once().Return(Operation.GT))

@@ -36,15 +36,43 @@ namespace query_parser
              from value in Value
              select new SimpleExpression(name, operation, value));
 
-        public static Parser<Expression> BooleanExpression = 
+        public static Parser<Expression> SimpleBooleanExpression = 
             (from left in SimpleExpression
              from booleanOperatorToken in BooleanOperatorToken
              from right in SimpleExpression
              select new BooleanExpression(booleanOperatorToken, left, right));
+        
+        public static Parser<Expression> BooleanExpression = 
+            (from startBracket in StartBracket
+             from simpleBooleanExpression in SimpleBooleanExpression
+             select simpleBooleanExpression
+            );
 
         public static Parser<Query> Query =
             (from booleanExpression in BooleanExpression
              select new Query(booleanExpression)
+            )
+            .Or
+            (from booleanExpression in SimpleBooleanExpression
+             select new Query(booleanExpression)
+            )
+            .Or
+            (from left in SimpleBooleanExpression
+             from booleanOperatorToken in BooleanOperatorToken
+             from right in BooleanExpression
+             select new Query(new BooleanExpression(booleanOperatorToken, left, right))
+            )
+            .Or
+            (from left in SimpleExpression
+             from booleanOperatorToken in BooleanOperatorToken
+             from right in SimpleBooleanExpression
+             select new Query(new BooleanExpression(booleanOperatorToken, left, right))
+            )
+            .Or
+            (from left in SimpleExpression
+             from booleanOperatorToken in BooleanOperatorToken
+             from right in BooleanExpression
+             select new Query(new BooleanExpression(booleanOperatorToken, left, right))
             )
             .Or
             (from expression in SimpleExpression

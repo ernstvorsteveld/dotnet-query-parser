@@ -57,6 +57,7 @@ namespace query_tests
             Assert.AreEqual(Operation.EQ, right.Operation);
             Assert.AreEqual("20", right.Value);
         }
+        
         [TestMethod]
         public void should_parse_between_expression() {
             Query query = parserExecutor.Parse("sign_date BETWEEN(01012021,01032021)");
@@ -79,6 +80,14 @@ namespace query_tests
             Assert.AreEqual("partner_id", right.Name);
             Assert.AreEqual(Operation.EQ, right.Operation);
             Assert.AreEqual("sheep", right.Value);
+        }
+
+        [TestMethod]
+        public void should_parse_complext_boolean_expression() {
+            Query query = parserExecutor.Parse(
+                "sign_date BETWEEN(01012021,01032021) AND (partner_id EQ sheep AND supplier_id EQ cow");
+            BooleanExpression booleanExpression = (BooleanExpression)query.Expression;
+
         }
     }
 }
